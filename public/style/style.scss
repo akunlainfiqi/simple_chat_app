@@ -1,0 +1,60 @@
+$main-bg: #36393f;
+$input-bg: rgb(64, 68, 75);
+$button-bg: rgb(185, 187, 190);
+$text-normal: #dcddde;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: $main-bg;
+
+  #inputArea {
+    position: absolute;
+    margin: 2rem 3rem;
+    bottom: 0;
+    width: calc(100% - 6rem);
+    display: flex;
+    background: $input-bg;
+    border-radius: 0.75rem;
+
+    #textInput {
+      border: none;
+      background: none;
+      padding: 0.75rem 2rem;
+      outline: none;
+      color: white;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+
+    button {
+      font-size: 1.1rem;
+      background: $button-bg;
+      border: none;
+      margin: 0.75rem 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      color: $input-bg;
+
+      &:hover {
+        background: white;
+      }
+    }
+  }
+
+  .msg-container {
+    width: 100%;
+    padding: 0 3rem;
+    color: $text-normal;
+    font-size: 1.1rem;
+
+    div {
+      margin: 0.5rem 0;
+    }
+  }
+}
