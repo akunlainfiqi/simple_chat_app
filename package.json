@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "nodemon index"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "eiows": "^3.6.1",
