@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 var express = require("express");
 var app = express();
 const server = require("http").createServer(app);
@@ -14,30 +13,45 @@ app.get("/jquery/jquery.js", function (req, res) {
 });
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-  // res.sendFile(__dirname + '/views/index.html');
   var ip = req.headers["x_forwarded_for"] || req.socket.remoteAddress;
   res.render("index", {
     user: ip,
   });
 });
-var usersTyping = [];
-var uTypingIndex = {};
+app.get('/image/user/uploaded/:img', (req,res) => {
+  fs.readFile(`./public/images/user/uploaded/${req.params.img}`, function(err, data) {
+    if (err) throw err // Fail if the file can't be read.
+    res.writeHead(200, {'Content-Type': 'image/jpeg'});
+    res.end(data);
+  });
+});
+
 io.on("connection", (socket) => {
   console.log("a user connected");
-  let raw = fs.readFileSync("msg.json");
+  let raw = fs.readFileSync("./storage/msg.json");
   let data = JSON.parse(raw);
   socket.emit("load message", data);
 
   socket.on("message sent", (mesData) => {
-    console.log(mesData);
+    var filenames = [];
+    if(mesData.file) {
+      let img = mesData.file;
+      for (let i in img)
+      {
+        let fname = makeid(50);
+        fs.writeFileSync(`./public/images/user/uploaded/${fname}`, img[i]);
+        filenames.push(fname);
+      }
+    }
     let newMsg = {
       name: mesData.name,
       msg: mesData.message,
+      files: filenames
     };
-    let raw = fs.readFileSync("msg.json");
+    let raw = fs.readFileSync("./storage/msg.json");
     let data = JSON.parse(raw);
     data.push(newMsg);
-    fs.writeFileSync("msg.json", JSON.stringify(data));
+    fs.writeFileSync("./storage/msg.json", JSON.stringify(data));
 
     io.sockets.emit("new message", data);
   });
@@ -50,6 +64,21 @@ io.on("connection", (socket) => {
     let name = user.name.replace(/ /g, "-");
     io.sockets.emit("done typing", name);
   });
+
+  function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) 
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      const date = new Date();
+      const filename = `${result}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.png`;
+    return filename;
+  }
+  socket.on("tes img", (img) => {
+    // console.log(img);
+    fs.writeFileSync(`./public/images/user/tes.png`, img['0']);
+  })
 });
 
 server.listen(PORT, () => {

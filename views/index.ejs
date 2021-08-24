@@ -9,14 +9,12 @@
     <link rel="stylesheet" href="/style/style.css" />
     <script src="jquery/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      $(document).ready(function () {
-        let user = "<%= user%>";
-        var socket = io();
+    <script> // script pembuka, get user
 
+        let user = "<%= user%>";
         function getCookie(cname) {
           let name = cname + "=";
-          let decodedCookie = decodeURIComponent(document.cookie);
+          let decodedCookie = document.cookie;
           let ca = decodedCookie.split(";");
           for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
@@ -29,105 +27,20 @@
           }
           return null;
         }
-        // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        let nametag = getCookie(user);
-        console.log(nametag);
-        var name;
-        if (!nametag) {
+
+      // to manually delete cookie (for testing only)
+      // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      
+      let nametag = getCookie(user);
+      console.log(user);
+      var name;
+      if (!nametag) {
           name = prompt("What do you want to be called as?");
           if (name && name != "") document.cookie = `${user}=${name}`;
-        } else name = nametag;
-
-        $("span.nametag").append(name && name != "" ? name : "Anonymous");
-        function submitMsg() {
-          let msg = $("#textInput").val();
-          if (msg !== "")
-            socket.emit("message sent", {
-              name: name ? name : "Anonymous",
-              message: msg,
-            });
-          document.getElementById("textInput").value = "";
-        }
-
-        $("#submitBtn").on("click", submitMsg);
-        $("#textInput").on("keypress", function (e) {
-          if (e.which == 13) {
-            submitMsg();
-          }
-        });
-        function loadMsg(msg) {
-          for (var i = msg.length - 1; i >= 0; i--)
-            $("div.msg-container").append(`<div>
-                <span ${msg[i].name == name ? 'style="color: red;"' : ""}>
-                    ${msg[i].name}
-                </span>: ${msg[i].msg}</div>`);
-        }
-
-        socket.on("load message", (msg) => {
-          loadMsg(msg);
-        });
-        socket.on("new message", (msg) => {
-          $("div.msg-container").empty();
-          loadMsg(msg);
-        });
-
-        // maksimal orang yang di display "is typing"
-        const max_people = 2;
-
-        socket.on("is typing", (user) => {
-          console.log(user);
-
-          let u = user.replace(/-/g, " ");
-          $("div.is-typing-container").prepend(`
-            <span class="user" id="${user}">${u + ", "}
-                </span>`);
-          if ($("div.is-typing-container").find(".is-typing").length == 0)
-            $("div.is-typing-container").append(
-              '<span class="is-typing"> is typing...</span>'
-            );
-
-          if ($("div.is-typing-container").find(".user").length > max_people) {
-            $("div.is-typing-container").find(".user").hide();
-            $("div.is-typing-container").find(".is-typing").hide();
-            $("div.is-typing-container").append(
-              '<span class="people-is-typing">several people is typing...</span>'
-            );
-          }
-        });
-
-        socket.on("done typing", (user) => {
-          console.log(user);
-          $("div.is-typing-container").find(`#${user}`).remove();
-          if ($("div.is-typing-container").find(".user").length < 1)
-            $("div.is-typing-container").find(".is-typing").remove();
-
-          if ($("div.is-typing-container").find(".user").length <= max_people) {
-            $("div.is-typing-container").find(".user").show();
-            $("div.is-typing-container").find(".is-typing").show();
-            $("div.is-typing-container").find(".people-is-typing").remove();
-          }
-        });
-        var isTypingTimeout;
-        var typingFlag = true;
-        $("#textInput").on("input", function () {
-          // biar hanya emit sekali
-          if (typingFlag)
-            socket.emit("is typing", {
-              name: name,
-            });
-
-          typingFlag = false;
-          clearTimeout(isTypingTimeout);
-          isTypingTimeout = setTimeout(doneTyping, 1000);
-        });
-        function doneTyping() {
-          socket.emit("done typing", {
-            name: name,
-          });
-          typingFlag = true;
-        }
-      });
+      } else name = nametag;
     </script>
+    <script src="/script/basic.js"></script>
+    <script src="/script/image-pasting.js"></script>
     <style>
       .center {
         text-align: center;
@@ -145,12 +58,13 @@
     <div>Currently posting as:<span class="nametag"></span></div>
 
     <div class="center is-typing-container"></div>
-
+    <div class="msg-container msg" style="text-align: center"></div>
+    
     <div class="center" id="inputArea">
       <input type="text" id="textInput" />
+      <input type="file" style="display:none;" id="attachment" />
       <button type="submit" id="submitBtn">submit</button>
     </div>
 
-    <div class="msg-container msg" style="text-align: center"></div>
   </body>
 </html>
