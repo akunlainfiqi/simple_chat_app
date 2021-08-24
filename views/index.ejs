@@ -55,10 +55,14 @@
     </style>
   </head>
   <body>
-    <div>Currently posting as:<span class="nametag"></span></div>
+    <div><span class="nametag">Currently posting as: </span></div>
 
-    <div class="center is-typing-container"></div>
     <div class="msg-container msg" style="text-align: center"></div>
+    
+    <div style="bottom: 95px; left: 450px; position:fixed;" id="statArea">
+      <div class="center file-upload-notice"></div>
+      <div class="center is-typing-container"></div>
+    </div>
     
     <div class="center" id="inputArea">
       <input type="text" id="textInput" />

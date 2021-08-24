@@ -56,4 +56,7 @@ body .msg-container {
 body .msg-container div {
   margin: 0.5rem 0;
 }
+.is-typing-container, .nametag {
+  color:aliceblue;
+}
 /*# sourceMappingURL=style.css.map */
