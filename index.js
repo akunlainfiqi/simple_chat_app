@@ -36,6 +36,7 @@ io.on("connection", (socket) => {
     var filenames = [];
     if(mesData.file) {
       let img = mesData.file;
+      console.log(img);
       for (let i in img)
       {
         let fname = makeid(50);

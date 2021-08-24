@@ -4,11 +4,16 @@ $(function () {
 
     function loadMsg(msg) {
         msg.forEach(msg => {
-        let content = `<div><span ${msg.name == name ? 'style="color: red;"' : ""}>
-        ${msg.name}</span>: ${msg.msg}`;
+        let content = `
+        <div>
+            <div>
+                <span ${msg.name == name ? 'style="color: red;"' : ""}>
+                    ${msg.name}
+                </span>: ${msg.msg}
+            </div>`;
         if(msg.files.length)
         msg.files.forEach(fname => {
-            content += `<img src="${document.URL}image/user/uploaded/${fname}">`;
+            content += `<div><img src="${document.URL}image/user/uploaded/${fname}"></div>`;
         })
         content += '</div>';
         $("div.msg-container").append(content);
