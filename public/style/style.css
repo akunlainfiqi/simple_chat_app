@@ -39,9 +39,17 @@ body #inputArea button {
   margin: 0.75rem 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.75rem;
+  cursor:pointer;
   color: #40444b;
 }
-
+body #inputArea #file-btn {
+  background: #5a5e62;
+  cursor:pointer;
+  color:#b9bbbe;
+}
+body #inputArea #file-btn:hover {
+  background:#4f5053;
+}
 body #inputArea button:hover {
   background: white;
 }

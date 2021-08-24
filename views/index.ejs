@@ -10,8 +10,6 @@
     <script src="jquery/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script> // script pembuka, get user
-
-        let user = "<%= user%>";
         function getCookie(cname) {
           let name = cname + "=";
           let decodedCookie = document.cookie;
@@ -30,14 +28,20 @@
 
       // to manually delete cookie (for testing only)
       // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      
+    $(function () {
+      let user = "<%= user%>";
       let nametag = getCookie(user);
       console.log(user);
       var name;
       if (!nametag) {
-          name = prompt("What do you want to be called as?");
-          if (name && name != "") document.cookie = `${user}=${name}`;
+        name = prompt("What do you want to be called as?");
+        if (name && name != "") document.cookie = `${user}=${name}`;
       } else name = nametag;
+
+      $("#file-btn").click(function () {
+        $("#attachment").click();
+      })
+    })
     </script>
     <script src="/script/basic.js"></script>
     <script src="/script/image-pasting.js"></script>
@@ -65,8 +69,9 @@
     </div>
     
     <div class="center" id="inputArea">
-      <input type="text" id="textInput" />
-      <!-- <input type="file" style="display:none;" id="attachment" /> -->
+      <button id="file-btn">+</button>
+      <input type="text" id="textInput"/>
+      <input type="file" style="display:none;" id="attachment" accept="image/*" />
       <button type="submit" id="submitBtn">submit</button>
     </div>
 

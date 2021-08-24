@@ -2,12 +2,21 @@ var socket = io();
 
 $(function () {
     var file = null;
+    $("#attachment").on('change', function () {
+        if(this.files && this.files[0])
+        {
+            file = this.files;
+            $(".file-upload-notice").html(
+                `<span style='font-size: 12px;'>'esc' to cancel</span><br>upload ${file[0].name}... `);
+        }
+    })
     document.onpaste = function(event){
         // fileInput.files = e.clipboardData.files;
         file = (event.clipboardData || event.originalEvent.clipboardData).files;
+        console.log(file);
         if(file.length)
             $(".file-upload-notice").html(
-                "<span style='font-size: 12px;'>'esc' to cancel</span><br>upload image.png... ");
+                `<span style='font-size: 12px;'>'esc' to cancel</span><br>upload ${file[0].name}... `);
     };
     document.body.onkeyup = function(k) {
         if(k.key == "Escape") {
