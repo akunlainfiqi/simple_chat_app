@@ -4,19 +4,22 @@ $(function () {
 
     function loadMsg(msg) {
         msg.forEach(msg => {
-        let content = `
-        <div>
+            let content = `
             <div>
-                <span ${msg.name == name ? 'style="color: red;"' : ""}>
-                    ${msg.name}
-                </span>: ${msg.msg}
-            </div>`;
-        if(msg.files.length)
-        msg.files.forEach(fname => {
-            content += `<div><img src="${document.URL}image/user/uploaded/${fname}"></div>`;
-        })
-        content += '</div>';
-        $("div.msg-container").append(content);
+                <div>
+                    <span ${msg.name == name ? 'style="color: red;"' : ""}>
+                        ${msg.name}
+                    </span>: ${msg.msg}
+                </div>`;
+                
+            var img_size = 'max-width:50%; max-height:50%;';
+            if(msg.files.length)
+                msg.files.forEach(fname => {
+                    content += `<div><img src="${document.URL}image/user/uploaded/${fname}" style="${img_size}"></div>`;
+                })
+            content += '</div>';
+            
+            $("div.msg-container").append(content);
         });
     }
 

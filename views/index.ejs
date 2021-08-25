@@ -28,11 +28,11 @@
 
       // to manually delete cookie (for testing only)
       // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      var name;
     $(function () {
       let user = "<%= user%>";
       let nametag = getCookie(user);
       console.log(user);
-      var name;
       if (!nametag) {
         name = prompt("What do you want to be called as?");
         if (name && name != "") document.cookie = `${user}=${name}`;
@@ -43,6 +43,7 @@
       })
     })
     </script>
+
     <script src="/script/basic.js"></script>
     <script src="/script/image-pasting.js"></script>
     <style>
@@ -57,7 +58,8 @@
         text-align: left;
       }
     </style>
-  </head>
+  
+</head>
   <body>
     <div><span class="nametag">Currently posting as: </span></div>
 
