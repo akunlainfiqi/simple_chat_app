@@ -12,20 +12,24 @@ $text-normal: #dcddde;
 body {
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: $main-bg;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: $text-normal;
 
   #inputArea {
-    position: absolute;
     margin: 2rem 3rem;
     bottom: 0;
     width: calc(100% - 6rem);
     display: flex;
     background: $input-bg;
     border-radius: 0.75rem;
+    height: 69px;
 
     #textInput {
       border: none;
       background: none;
-      padding: 0.75rem 2rem;
+      padding: 0.75rem 1rem;
       outline: none;
       color: white;
       font-size: 1.2rem;
@@ -52,9 +56,13 @@ body {
     padding: 0 3rem;
     color: $text-normal;
     font-size: 1.1rem;
+    overflow: auto;
+    overscroll-behavior: auto;
+    flex-grow: 1;
 
     div {
       margin: 0.5rem 0;
+      overflow-wrap: break-word;
     }
   }
 }
