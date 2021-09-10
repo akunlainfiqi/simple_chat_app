@@ -28,42 +28,35 @@
 
       // to manually delete cookie (for testing only)
       // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      var name;
-    $(function () {
-      let user = "<%= user%>";
-      let nametag = getCookie(user);
-      console.log(user);
-      if (!nametag) {
-        name = prompt("What do you want to be called as?");
-        if (name && name != "") document.cookie = `${user}=${name}`;
-      } else name = nametag;
 
-      $("#file-btn").click(function () {
-        $("#attachment").click();
+      var name;
+      var socket = io();
+      const ScrolltoBottom = () => $(".msg-container").animate({scrollTop:9999}, "fast");
+
+      $(function () {
+        ScrolltoBottom();
+          let user = "<%= user%>";
+          let nametag = getCookie(user);
+          console.log(user);
+          if (!nametag) {
+            name = prompt("What do you want to be called as?");
+            if (name && name != "") document.cookie = `${user}=${name}`;
+          } else name = nametag;
+
+          $("#file-btn").click(function () {
+            $("#attachment").click();
+          })
       })
-    })
     </script>
 
     <script src="/script/basic.js"></script>
     <script src="/script/image-pasting.js"></script>
-    <style>
-      .center {
-        text-align: center;
-      }
-      .msg {
-        width: 50%;
-        margin: auto;
-      }
-      .msg div {
-        text-align: left;
-      }
-    </style>
   
 </head>
   <body>
     <div><span class="nametag">Currently posting as: </span></div>
 
-    <div class="msg-container msg" style="text-align: center"></div>
+    <div class="msg-container msg" id="msg-container" style="text-align: center"></div>
     
     <div style="bottom: 95px; left: 450px; position:fixed;" id="statArea">
       <div class="center file-upload-notice"></div>

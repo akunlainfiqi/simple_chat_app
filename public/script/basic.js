@@ -1,4 +1,4 @@
-var socket = io();
+
 $(function () {
     $("span.nametag").append(name && name != "" ? name : "Anonymous");
 

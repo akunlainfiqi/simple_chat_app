@@ -1,4 +1,4 @@
-var socket = io();
+
 
 $(function () {
     var file = null;
@@ -37,9 +37,15 @@ $(function () {
         document.getElementById("textInput").value = "";
         $(".file-upload-notice").html("");
     }
-    $("#submitBtn").on("click", submitMsg);
+    $("#submitBtn").on("click", () => {
+        submitMsg();
+        ScrolltoBottom();
+    });
     $("#textInput").on("keypress", function (e) {
         if (e.which == 13) // if enter
+        {
             submitMsg();
+            ScrolltoBottom();
+        }
     });
 })

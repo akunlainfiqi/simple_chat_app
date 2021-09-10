@@ -56,4 +56,15 @@ body .msg-container div {
   overflow-wrap: break-word;
 }
 
+.center {
+  text-align: center;
+}
+.msg {
+  width: 50%;
+  margin: auto;
+}
+.msg div {
+  text-align: left;
+}
+
 /*# sourceMappingURL=style.css.map */
