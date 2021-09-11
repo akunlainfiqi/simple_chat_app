@@ -21,6 +21,7 @@ $(function () {
             
             $("div.msg-container").append(content);
         });
+        ScrolltoBottom();
     }
 
     socket.on("load message", (msg) => {

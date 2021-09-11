@@ -39,13 +39,11 @@ $(function () {
     }
     $("#submitBtn").on("click", () => {
         submitMsg();
-        ScrolltoBottom();
     });
     $("#textInput").on("keypress", function (e) {
         if (e.which == 13) // if enter
         {
-            submitMsg();
-            ScrolltoBottom();
+            submitMsg();;
         }
     });
 })
