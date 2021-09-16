@@ -1,6 +1,6 @@
 
 $(function () {
-    $("span.nametag").append(name && name != "" ? name : "Anonymous");
+    $("div.nametag").append(name && name != "" ? name : "Anonymous");
 
     function loadMsg(msg) {
         msg.forEach(msg => {

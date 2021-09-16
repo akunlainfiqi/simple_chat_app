@@ -33,7 +33,7 @@
 
     var name;
     var socket = io();
-    const ScrolltoBottom = () => $(".msg-container").animate({
+    const ScrolltoBottom = () => $(".chatbox").animate({
       scrollTop: 9999
     }, "fast");
 
@@ -45,6 +45,10 @@
         name = prompt("What do you want to be called as?");
         if (name && name != "") document.cookie = `${user}=${name}`;
       } else name = nametag;
+
+      socket.on("jumlah user update", (s) => {
+        $(".jumlah-user").html(`${s} user${s>1?"s":""} is on this room`);
+      })
 
       $("#file-btn").click(function () {
         $("#attachment").click();
@@ -58,15 +62,12 @@
 </head>
 
 <body>
-  <div class="header"><span class="nametag">Currently posting as: </span></div>
+  <div class="header"><div class="nametag">Currently posting as: </div> <div class="center file-upload-notice"></div> <div class="jumlah-user"></div> </div>
   <div class="chatbox">
     <div class="msg-container msg" id="msg-container">
     </div>
   </div>
-  <div style="position:fixed;" id="statArea">
-    <div class="center file-upload-notice"></div>
-    <div class="center"></div>
-  </div>
+
   <div class="container" id="bottom">
     <div class="center" id="inputArea">
       <button id="file-btn">+</button>
