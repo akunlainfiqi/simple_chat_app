@@ -1,4 +1,6 @@
 $main-bg: #36393f;
+$secondary-bg: #2f3136;
+$tertier-bg: #202225;
 $input-bg: rgb(64, 68, 75);
 $button-bg: rgb(185, 187, 190);
 $text-normal: #dcddde;
@@ -12,49 +14,69 @@ $text-normal: #dcddde;
 body {
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: $main-bg;
-
-  #inputArea {
-    position: absolute;
-    margin: 2rem 3rem;
-    bottom: 0;
-    width: calc(100% - 6rem);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: $text-normal;
+  .header{
     display: flex;
-    background: $input-bg;
-    border-radius: 0.75rem;
-
-    #textInput {
-      border: none;
-      background: none;
-      padding: 0.75rem 2rem;
-      outline: none;
-      color: white;
-      font-size: 1.2rem;
+    flex-direction: row-reverse;
+    padding: 1rem;
+    box-shadow: 0 0.1px 1px #000;
+  }
+  .chatbox {
+    overflow: auto;
+    flex-grow:1;
+    position: relative;
+    overscroll-behavior: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    
+    .msg-container {
       width: 100%;
-    }
-
-    button {
+      padding: 0 3rem 1rem 3rem;
+      color: $text-normal;
       font-size: 1.1rem;
-      background: $button-bg;
-      border: none;
-      margin: 0.75rem 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 0.75rem;
-      color: $input-bg;
-
-      &:hover {
-        background: white;
+      div {
+        margin: 0.5rem 0;
+        overflow-wrap: break-word;
       }
     }
   }
+}
+#bottom{
+  padding: 0 3rem;
+}
+#inputArea {
+  bottom: 0;
+  display: flex;
+  background: $input-bg;
+  border-radius: 0.75rem;
+  height: 4em;
 
-  .msg-container {
+  #textInput {
+    border: none;
+    background: none;
+    padding: 0.75rem 1rem;
+    outline: none;
+    color: white;
+    font-size: 1.2rem;
     width: 100%;
-    padding: 0 3rem;
-    color: $text-normal;
-    font-size: 1.1rem;
+  }
 
-    div {
-      margin: 0.5rem 0;
+  button {
+    font-size: 1.1rem;
+    background: $button-bg;
+    border: none;
+    margin: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10rem;
+    color: $input-bg;
+    &:hover {
+      background: white;
     }
   }
+}
+.is-typing-container{
+  height: 2em;
 }

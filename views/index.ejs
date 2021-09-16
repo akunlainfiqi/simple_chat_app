@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="3"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat</title>
-    <link rel="stylesheet" href="/style/style.css" />
-    <script src="jquery/jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script> // script pembuka, get user
-        function getCookie(cname) {
-          let name = cname + "=";
-          let decodedCookie = document.cookie;
-          let ca = decodedCookie.split(";");
-          for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == " ") {
-              c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-            }
-          }
-          return null;
-        }
 
-      // to manually delete cookie (for testing only)
-      // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      var name;
+<head>
+  <meta charset="UTF-8" />
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="3"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat</title>
+  <link rel="stylesheet" href="/style/style.css" />
+  <script src="jquery/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // script pembuka, get user
+    function getCookie(cname) {
+      let name = cname + "=";
+      let decodedCookie = document.cookie;
+      let ca = decodedCookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return null;
+    }
+
+    // to manually delete cookie (for testing only)
+    // document.cookie = "140.213.0.22=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    var name;
+    var socket = io();
+    const ScrolltoBottom = () => $(".chatbox").animate({
+      scrollTop: 9999
+    }, "fast");
+
     $(function () {
       let user = "<%= user%>";
       let nametag = getCookie(user);
@@ -38,44 +46,39 @@
         if (name && name != "") document.cookie = `${user}=${name}`;
       } else name = nametag;
 
+      socket.on("jumlah user update", (s) => {
+        $(".jumlah-user").html(`${s} user${s>1?"s":""} is on this room`);
+      })
+
       $("#file-btn").click(function () {
         $("#attachment").click();
       })
     })
-    </script>
+  </script>
 
-    <script src="/script/basic.js"></script>
-    <script src="/script/image-pasting.js"></script>
-    <style>
-      .center {
-        text-align: center;
-      }
-      .msg {
-        width: 50%;
-        margin: auto;
-      }
-      .msg div {
-        text-align: left;
-      }
-    </style>
-  
+  <script src="/script/basic.js"></script>
+  <script src="/script/image-pasting.js"></script>
+
 </head>
-  <body>
-    <div><span class="nametag">Currently posting as: </span></div>
 
-    <div class="msg-container msg" style="text-align: center"></div>
-    
-    <div style="bottom: 95px; left: 450px; position:fixed;" id="statArea">
-      <div class="center file-upload-notice"></div>
-      <div class="center is-typing-container"></div>
+<body>
+  <div class="header"><div class="nametag">Currently posting as: </div> <div class="center file-upload-notice"></div> <div class="jumlah-user"></div> </div>
+  <div class="chatbox">
+    <div class="msg-container msg" id="msg-container">
     </div>
-    
+  </div>
+
+  <div class="container" id="bottom">
     <div class="center" id="inputArea">
       <button id="file-btn">+</button>
-      <input type="text" id="textInput"/>
+      <input type="text" id="textInput" />
       <input type="file" style="display:none;" id="attachment" accept="image/*" />
       <button type="submit" id="submitBtn">submit</button>
     </div>
+    <div class="is-typing-container"></div>
+  </div>
+  </div>
 
-  </body>
+</body>
+
 </html>

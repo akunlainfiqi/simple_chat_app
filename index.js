@@ -30,6 +30,11 @@ io.on("connection", (socket) => {
   console.log("a user connected");
   let raw = fs.readFileSync("./storage/msg.json");
   let data = JSON.parse(raw);
+  
+  let user_count = io.engine.clientsCount
+  io.sockets.emit("jumlah user update", user_count)
+  socket.on("disconnect", user_count);
+
   socket.emit("load message", data);
 
   socket.on("message sent", (mesData) => {

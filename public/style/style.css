@@ -1,70 +1,78 @@
 * {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: #36393f;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: #dcddde;
+}
+body .header {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1rem;
+  box-shadow: 0 0.1px 1px #000;
+}
+body .chatbox {
+  overflow: auto;
+  flex-grow: 1;
+  position: relative;
+  overscroll-behavior: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+body .chatbox .msg-container {
+  width: 100%;
+  padding: 0 3rem 1rem 3rem;
+  color: #dcddde;
+  font-size: 1.1rem;
+}
+body .chatbox .msg-container div {
+  margin: 0.5rem 0;
+  overflow-wrap: break-word;
 }
 
-body #inputArea {
-  position: fixed;
-  margin: 2rem 3rem;
+#bottom {
+  padding: 0 3rem;
+}
+
+#inputArea {
   bottom: 0;
-  width: calc(100% - 6rem);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   background: #40444b;
   border-radius: 0.75rem;
+  height: 4em;
 }
-
-body #inputArea #textInput {
+#inputArea #textInput {
   border: none;
   background: none;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1rem;
   outline: none;
   color: white;
   font-size: 1.2rem;
   width: 100%;
 }
-
-body #inputArea button {
+#inputArea button {
   font-size: 1.1rem;
   background: #b9bbbe;
   border: none;
   margin: 0.75rem 1rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.75rem;
-  cursor:pointer;
+  border-radius: 10rem;
   color: #40444b;
 }
-body #inputArea #file-btn {
-  background: #5a5e62;
-  cursor:pointer;
-  color:#b9bbbe;
-}
-body #inputArea #file-btn:hover {
-  background:#4f5053;
-}
-body #inputArea button:hover {
+#inputArea button:hover {
   background: white;
 }
 
-body .msg-container {
-  width: 100%;
-  padding: 0 3rem;
-  color: #dcddde;
-  font-size: 1.1rem;
+.is-typing-container {
+  height: 2em;
 }
 
-body .msg-container div {
-  margin: 0.5rem 0;
-}
-.is-typing-container, .nametag {
-  color:aliceblue;
-}
 /*# sourceMappingURL=style.css.map */

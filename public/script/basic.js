@@ -1,6 +1,6 @@
-var socket = io();
+
 $(function () {
-    $("span.nametag").append(name && name != "" ? name : "Anonymous");
+    $("div.nametag").append(name && name != "" ? name : "Anonymous");
 
     function loadMsg(msg) {
         msg.forEach(msg => {
@@ -21,6 +21,7 @@ $(function () {
             
             $("div.msg-container").append(content);
         });
+        ScrolltoBottom();
     }
 
     socket.on("load message", (msg) => {
